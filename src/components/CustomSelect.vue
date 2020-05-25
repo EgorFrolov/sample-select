@@ -23,7 +23,8 @@
         v-for="(item, index) in items"
         :key="index"
         class="dropdown-item"
-        @click="chooseDropdownItem(item)"
+        :class="calcDropdownItemClasses(index)"
+        @click="chooseDropdownItem(item, index)"
       >
         {{ itemData(item) }}
       </div>
@@ -32,13 +33,15 @@
 </template>
 
 <script>
+import { KEY_DOWN_CODE, KEY_UP_CODE, KEY_ENTER_CODE } from '../common/constants'
 export default {
   name: 'CustomSelect',
   data () {
     return {
       isOpen: false,
       internalValue: '',
-      internalText: ''
+      internalText: '',
+      selectedIndex: 0
     }
   },
   model: {
@@ -70,12 +73,16 @@ export default {
       default: 'Выберите из списка'
     }
   },
+  mounted () {
+    this.initKeyHandlers()
+  },
   methods: {
-    chooseDropdownItem (item) {
+    chooseDropdownItem (item, index) {
       const isObject = typeof (item) === 'object'
       this.internalValue = isObject ? item[this.customValue] : item
       this.internalText = isObject ? item[this.customText] : item
       this.$emit('change', this.internalValue)
+      this.selectedIndex = index
       this.isOpen = false
     },
     toggleSelector () {
@@ -84,6 +91,21 @@ export default {
     itemData (item) {
       const isObject = typeof (item) !== 'object'
       return isObject ? item : item[this.customText]
+    },
+    initKeyHandlers () {
+      document.addEventListener('keyup', this.toggleSelectItem)
+    },
+    toggleSelectItem (event) {
+      if (event.keyCode === KEY_UP_CODE && this.selectedIndex > 0) {
+        this.selectedIndex--
+      } else if (event.keyCode === KEY_DOWN_CODE && this.selectedIndex < this.items.length - 1) {
+        this.selectedIndex++
+      } else if (event.keyCode === KEY_ENTER_CODE && this.isOpen) {
+        this.chooseDropdownItem(this.items[this.selectedIndex])
+      }
+    },
+    calcDropdownItemClasses (index) {
+      return ['dropdown-item', this.selectedIndex === index ? 'dropdown-item--selected' : '']
     }
   },
   computed: {
@@ -124,6 +146,9 @@ export default {
       padding: 10px;
       margin-top: 5px;
       border-radius: 5px;
+      &--selected {
+        border: 1px solid gray;
+      }
     }
     .dropdown-item:hover {
       border: 1px solid gray;

@@ -5,7 +5,7 @@
       label="Выпадающий список"
       custom-text="label"
       custom-value="value"
-      :disabled="true"
+      :disabled="false"
       v-model="selectedItem"
     >
     </custom-select>
