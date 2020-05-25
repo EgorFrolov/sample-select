@@ -2,6 +2,10 @@
   <div id="app">
     <custom-select
       :items="items"
+      label="Выпадающий список"
+      custom-text="label"
+      custom-value="value"
+      :disabled="true"
       v-model="selectedItem"
     >
     </custom-select>
@@ -19,12 +23,24 @@ export default {
   data () {
     return {
       items: [
-        'test 1',
-        'test 2',
-        'test 3',
-        'test 4'
+        {
+          label: 'Первый',
+          value: 'one'
+        },
+        {
+          label: 'Второй',
+          value: 'two'
+        },
+        {
+          label: 'Третий',
+          value: 'three'
+        },
+        {
+          label: 'Четвертый',
+          value: 'four'
+        }
       ],
-      selectedItem: 'test 1'
+      selectedItem: 'four'
     }
   }
 }
