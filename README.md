@@ -19,12 +19,19 @@ npm run build --report
 ```
 CUSTOM-SELECT
 
+Props
 items: this prop can be array of primitive data type.
+
 value: first value in custom-select; you can use v-model instead "value".
+
 customText: this is the key in object (if items is object) that will display in dropdown list.
+
 customValue: this is the key in object (if items is object) that will be value in dropdown list.
+
 label: label for input of custom-select.
+
 disabled: disable or enable input in custom-select.
+
 placeholder: placeholder for input in custom-select.
 
 You can user mouse of keyboard navigation for select dropdown item.
