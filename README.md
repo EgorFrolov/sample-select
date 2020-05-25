@@ -17,5 +17,14 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+CUSTOM-SELECT
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+items: this prop can be array of primitive data type.
+value: first value in custom-select; you can use v-model instead "value".
+customText: this is the key in object (if items is object) that will display in dropdown list.
+customValue: this is the key in object (if items is object) that will be value in dropdown list.
+label: label for input of custom-select.
+disabled: disable or enable input in custom-select.
+placeholder: placeholder for input in custom-select.
+
+You can user mouse of keyboard navigation for select dropdown item.
