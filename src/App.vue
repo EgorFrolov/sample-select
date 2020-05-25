@@ -40,7 +40,10 @@ export default {
           value: 'four'
         }
       ],
-      selectedItem: 'four'
+      selectedItem: {
+        label: 'Четвертый',
+        value: 'four'
+      }
     }
   }
 }

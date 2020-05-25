@@ -24,7 +24,7 @@
         :key="index"
         class="dropdown-item"
         :class="calcDropdownItemClasses(index)"
-        @click="chooseDropdownItem(item, index)"
+        @click="chooseDropdownItem(item)"
       >
         {{ itemData(item) }}
       </div>
@@ -75,14 +75,19 @@ export default {
   },
   mounted () {
     this.initKeyHandlers()
+    this.initInternalData(this.value)
   },
   methods: {
-    chooseDropdownItem (item, index) {
+    initInternalData (item) {
       const isObject = typeof (item) === 'object'
       this.internalValue = isObject ? item[this.customValue] : item
       this.internalText = isObject ? item[this.customText] : item
+      this.selectedIndex = this.items.findIndex(el =>
+        isObject ? this.internalValue === el[this.customValue] : el === item)
+    },
+    chooseDropdownItem (item) {
+      this.initInternalData(item)
       this.$emit('change', this.internalValue)
-      this.selectedIndex = index
       this.isOpen = false
     },
     toggleSelector () {
@@ -101,7 +106,7 @@ export default {
       } else if (event.keyCode === KEY_DOWN_CODE && this.selectedIndex < this.items.length - 1) {
         this.selectedIndex++
       } else if (event.keyCode === KEY_ENTER_CODE && this.isOpen) {
-        this.chooseDropdownItem(this.items[this.selectedIndex], this.selectedIndex)
+        this.chooseDropdownItem(this.items[this.selectedIndex])
       } else if (event.keyCode === KEY_ENTER_CODE && !this.isOpen) {
         this.isOpen = true
       }
