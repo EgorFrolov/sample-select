@@ -101,7 +101,9 @@ export default {
       } else if (event.keyCode === KEY_DOWN_CODE && this.selectedIndex < this.items.length - 1) {
         this.selectedIndex++
       } else if (event.keyCode === KEY_ENTER_CODE && this.isOpen) {
-        this.chooseDropdownItem(this.items[this.selectedIndex])
+        this.chooseDropdownItem(this.items[this.selectedIndex], this.selectedIndex)
+      } else if (event.keyCode === KEY_ENTER_CODE && !this.isOpen) {
+        this.isOpen = true
       }
     },
     calcDropdownItemClasses (index) {
